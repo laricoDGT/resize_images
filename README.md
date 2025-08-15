@@ -1,45 +1,65 @@
 # 🖼️ resize-images.sh
 
-Script de shell para redimensionar imágenes por lotes desde la terminal, manteniendo proporciones si se desea. Las imágenes redimensionadas se guardan en una subcarpeta `resized`.
+Script de shell para redimensionar imágenes por lotes desde la terminal. Soporta fijar ancho, alto, ambos ejes sin mantener proporción, o escala en porcentaje. Las imágenes redimensionadas se guardan en la subcarpeta `resized`.
 
 ## 📦 Requisitos
 
-- Bash
-- [ImageMagick](https://imagemagick.org/) (`convert`)
+*   Bash
+*   [ImageMagick](https://imagemagick.org/) (`convert` o `magick`)
 
-Instalar ImageMagick (en Debian/Ubuntu):
+**Instalar ImageMagick (Debian/Ubuntu):**
 
-```bash
+```
+sudo apt update
 sudo apt install imagemagick
 ```
 
+**Verificar instalación:**
+
+```
+convert -version || magick -version
+```
+
 ## 🚀 Uso
-```bash
+
+```
 ./resize_images.sh <carpeta> <dimensiones>
+```
+
+**Dar permisos de ejecución si hace falta:**
+
+```
+chmod +x resize_images.sh
 ```
 
 ## 📌 Dimensiones soportadas
 
-800x → fija el ancho y ajusta el alto automáticamente.
-
-x600 → fija el alto y ajusta el ancho automáticamente.
-
-800x600 → fija ambos (no mantiene proporción).
-
-50% → escala en porcentaje (reduce o amplía en ambos ejes proporcionalmente).
+*   `800x` → fija el **ancho** y ajusta el alto proporcionalmente.
+*   `x600` → fija el **alto** y ajusta el ancho proporcionalmente.
+*   `800x600` → fija **ambos** ejes y **no mantiene proporción** (se fuerza con `!` internamente).
+*   `50%` → escala proporcional en ambos ejes.
 
 ## 📁 Ejemplos
-```bash
-./resize_images.sh ./imagenes 800x      # Solo ancho
-./resize_images.sh ./imagenes x600      # Solo alto
-./resize_images.sh ./imagenes 800x600   # Ambos ejes
-./resize_images.sh ./imagenes 50%       # Escala proporcional al 50%
+
+```
+./resize_images.sh ./imagenes 800x
+./resize_images.sh ./imagenes x600
+./resize_images.sh ./imagenes 800x600
+./resize_images.sh ./imagenes 50%
 ```
 
-Las imágenes redimensionadas se guardarán en la carpeta:
+Las imágenes redimensionadas se guardarán en:
+
 ```
 ./imagenes/resized/
 ```
 
+## 🛠️ Notas
+
+*   Se procesan archivos `.jpg`, `.jpeg`, `.png`, `.gif` con mayúsculas o minúsculas.
+*   Si tu sistema solo tiene `magick` en lugar de `convert`, el script lo detecta automáticamente.
+*   Si pasas `800x600`, el resultado fuerza exactamente ese tamaño.
+
 ## 📬 Contribuciones
-¡Se aceptan mejoras, issues y pull request 
+
+¡Se aceptan mejoras, issues y pull requests!
